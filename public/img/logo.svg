@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 58" role="img" aria-label="Dalloul">
+  <defs>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd76b"/><stop offset="1" stop-color="#f2a516"/>
+    </linearGradient>
+    <linearGradient id="g-blue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f5aa0"/><stop offset="1" stop-color="#0b2447"/>
+    </linearGradient>
+  </defs>
+  <!-- sun -->
+  <circle cx="55" cy="15" r="9" fill="url(#g-gold)"/>
+  <!-- pyramids -->
+  <path d="M2 47 L25 11 L48 47 Z" fill="url(#g-blue)"/>
+  <path d="M31 47 L47 22 L63 47 Z" fill="#2a63a8"/>
+  <!-- ground -->
+  <rect x="1" y="47" width="64" height="3.4" rx="1.7" fill="#0b2447"/>
+  <!-- flight path -->
+  <path d="M6 37 Q 38 3 71 23" fill="none" stroke="url(#g-gold)" stroke-width="2"
+        stroke-dasharray="1.6 4.2" stroke-linecap="round"/>
+  <!-- plane -->
+  <path d="M67 18 l8 4 -8 4 2 -4 z" fill="#f2a516"/>
+</svg>

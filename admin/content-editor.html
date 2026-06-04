@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تعديل نصوص الموقع — لوحة التحكم</title>
+  <style>
+    :root { --blue:#0b2447; --blue2:#143a6b; --gold:#f2a516; --line:#e1e8f0; --bg:#eef2f8; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Segoe UI",Tahoma,Arial,sans-serif; color:#16233a; background:var(--bg); }
+    .toolbar { position:sticky; top:0; z-index:20; background:#fff; border-bottom:1px solid var(--line);
+      display:flex; align-items:center; gap:12px; padding:12px 18px; flex-wrap:wrap; box-shadow:0 1px 8px rgba(11,36,71,.06); }
+    .toolbar h1 { font-size:18px; margin:0; color:var(--blue); }
+    .toolbar .links a { color:var(--blue2); text-decoration:none; margin-inline-end:12px; font-size:14px; }
+    .toolbar input[type=search] { flex:1; min-width:180px; padding:9px 12px; border:1px solid var(--line); border-radius:10px; font:inherit; }
+    .save { background:linear-gradient(180deg,#ffcf4d,var(--gold)); color:#3a2a00; border:0; font-weight:800;
+      padding:10px 20px; border-radius:999px; cursor:pointer; font-size:15px; }
+    .save:hover { filter:brightness(1.05); }
+    .wrap { max-width:1100px; margin:0 auto; padding:18px; }
+    .hint { color:#5f7081; font-size:13px; margin:6px 0 16px; }
+    .grp { background:#fff; border:1px solid var(--line); border-radius:14px; margin-bottom:16px; overflow:hidden; }
+    .grp > h2 { margin:0; padding:12px 16px; background:var(--blue); color:#fff; font-size:16px; }
+    .row { display:grid; grid-template-columns:160px 1fr 1fr 1fr; gap:10px; padding:12px 16px; border-top:1px solid var(--line); align-items:start; }
+    .row:first-of-type { border-top:0; }
+    .key { font-family:monospace; font-size:11px; color:#6b7a90; word-break:break-all; padding-top:6px; }
+    .cell { display:flex; flex-direction:column; gap:4px; }
+    .cell .lab { display:flex; justify-content:space-between; align-items:center; font-size:12px; font-weight:700; color:var(--blue2); }
+    .cell .rst { border:0; background:#eef2f8; color:#6b7a90; border-radius:6px; cursor:pointer; font-size:12px; padding:1px 6px; }
+    .cell textarea { width:100%; padding:8px 10px; border:1px solid var(--line); border-radius:8px; font:inherit; font-size:14px; resize:vertical; min-height:42px; background:#fcfdff; }
+    .cell textarea:focus { outline:none; border-color:var(--blue2); box-shadow:0 0 0 3px rgba(20,58,107,.12); }
+    .cell.changed textarea { border-color:var(--gold); background:#fffdf5; }
+    .toast { position:fixed; inset-inline:0; bottom:18px; display:flex; justify-content:center; pointer-events:none; z-index:50; }
+    .toast span { background:#0b2447; color:#fff; padding:11px 20px; border-radius:999px; font-weight:700; box-shadow:0 8px 24px rgba(0,0,0,.25); opacity:0; transform:translateY(10px); transition:.25s; }
+    .toast.show span { opacity:1; transform:none; }
+    .toast.err span { background:#c0392b; }
+    @media (max-width:760px){ .row{ grid-template-columns:1fr; } .key{ padding-top:0; } }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <h1>✏️ تعديل نصوص الموقع</h1>
+    <span class="links"><a href="/admin">← الطلبات</a><a href="/" target="_blank">عرض الموقع ↗</a></span>
+    <input type="search" id="q" placeholder="ابحث في النصوص أو المفاتيح…">
+    <button class="save" id="save">💾 حفظ التغييرات</button>
+  </div>
+  <div class="wrap">
+    <p class="hint">عدّل النص لأي لغة ثم اضغط «حفظ». الحقول المعدّلة تظهر بإطار ذهبي. زر «↺» يعيد النص الأصلي. تنعكس التعديلات على الموقع مباشرة بعد الحفظ.</p>
+    <div id="app">جارٍ التحميل…</div>
+  </div>
+  <div class="toast" id="toast"><span></span></div>
+
+  <script src="/js/i18n.js"></script>
+  <script>
+    document.documentElement.dir = 'rtl'; document.documentElement.lang = 'ar';
+    const GROUPS = {
+      nav:'القائمة العلوية', footer:'التذييل',
+      slide1:'السلايدر ١ — موافقة دخول مصر', slide2:'السلايدر ٢ — العمرة والحج',
+      slide3:'السلايدر ٣ — الطيران', slide4:'السلايدر ٤ — الأوراق',
+      price:'الأسعار', flags:'الأعلام (الجنسيات المدعومة)', badge:'الشارات',
+      intro:'المقدمة', services:'قسم الخدمات', svc:'بطاقات الخدمات',
+      how:'كيف نعمل', trust:'لماذا دلول', cta:'دعوة لإجراء',
+      spage:'صفحة الخدمات', apply:'صفحة الطلب', form:'نموذج الطلب', opt:'خيارات الخدمة',
+      contact:'صفحة التواصل', ty:'صفحة الشكر', e404:'صفحة 404'
+    };
+    const LANGS = [['ar','عربي','rtl'],['en','English','ltr'],['zh','中文','ltr']];
+    const defaults = window.I18N_DEFAULTS || { ar:{}, en:{}, zh:{} };
+    let overrides = { ar:{}, en:{}, zh:{} };
+
+    const def = (l,k) => (defaults[l] && defaults[l][k] != null) ? defaults[l][k] : '';
+    const cur = (l,k) => (overrides[l] && overrides[l][k] != null) ? overrides[l][k] : def(l,k);
+    const groupOf = k => k.split('.')[0];
+
+    function render() {
+      const keys = Object.keys(defaults.ar);
+      const groups = {};
+      keys.forEach(k => { (groups[groupOf(k)] = groups[groupOf(k)] || []).push(k); });
+      const app = document.getElementById('app'); app.innerHTML = '';
+      Object.keys(groups).forEach(g => {
+        const sec = document.createElement('section'); sec.className = 'grp';
+        const h = document.createElement('h2'); h.textContent = GROUPS[g] || g; sec.appendChild(h);
+        groups[g].forEach(k => {
+          const row = document.createElement('div'); row.className = 'row'; row.dataset.key = k;
+          const kc = document.createElement('div'); kc.className = 'key'; kc.textContent = k; row.appendChild(kc);
+          LANGS.forEach(([l, lab, dir]) => {
+            const cell = document.createElement('label'); cell.className = 'cell';
+            const head = document.createElement('div'); head.className = 'lab';
+            const name = document.createElement('span'); name.textContent = lab;
+            const rst = document.createElement('button'); rst.type = 'button'; rst.className = 'rst'; rst.textContent = '↺'; rst.title = 'إعادة النص الأصلي';
+            head.appendChild(name); head.appendChild(rst);
+            const ta = document.createElement('textarea'); ta.dir = dir; ta.value = cur(l, k);
+            ta.dataset.l = l; ta.dataset.k = k;
+            const mark = () => cell.classList.toggle('changed', ta.value !== def(l, k));
+            ta.addEventListener('input', mark);
+            rst.addEventListener('click', () => { ta.value = def(l, k); mark(); });
+            mark();
+            cell.appendChild(head); cell.appendChild(ta);
+            row.appendChild(cell);
+          });
+          sec.appendChild(row);
+        });
+        app.appendChild(sec);
+      });
+    }
+
+    function save() {
+      const out = { ar:{}, en:{}, zh:{} };
+      document.querySelectorAll('textarea[data-k]').forEach(t => {
+        const l = t.dataset.l, k = t.dataset.k, v = t.value;
+        if (v !== def(l, k)) out[l][k] = v;   // store only changes
+      });
+      fetch('/admin/content', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(out) })
+        .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .then(d => { overrides = out; toast('✅ تم الحفظ (' + (d.overrides || 0) + ' تعديل)'); })
+        .catch(() => toast('❌ فشل الحفظ — تحقق من تسجيل الدخول', true));
+    }
+
+    let tT;
+    function toast(msg, err) {
+      const t = document.getElementById('toast'); t.querySelector('span').textContent = msg;
+      t.className = 'toast show' + (err ? ' err' : ''); clearTimeout(tT);
+      tT = setTimeout(() => t.className = 'toast', 2600);
+    }
+
+    function filter(q) {
+      q = q.trim().toLowerCase();
+      document.querySelectorAll('.row').forEach(r => {
+        const hay = (r.dataset.key + ' ' + [...r.querySelectorAll('textarea')].map(t => t.value).join(' ')).toLowerCase();
+        r.style.display = (!q || hay.includes(q)) ? '' : 'none';
+      });
+      document.querySelectorAll('.grp').forEach(g => {
+        const any = [...g.querySelectorAll('.row')].some(r => r.style.display !== 'none');
+        g.style.display = any ? '' : 'none';
+      });
+    }
+
+    document.getElementById('save').addEventListener('click', save);
+    document.getElementById('q').addEventListener('input', e => filter(e.target.value));
+
+    fetch('/api/content').then(r => r.ok ? r.json() : null).then(o => { if (o) overrides = o; render(); })
+      .catch(() => render());
+  </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>قدّم طلبك — دلول للسياحة والسفر</title>
+  <meta name="description" content="قدّم طلبك لدى دلول وارفع أوراقك بسهولة، وفريقنا يتواصل معك لتأكيد التفاصيل.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&family=Tajawal:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="/img/logo.svg">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="/" aria-label="دلول للسياحة والسفر">
+        <img class="logo-mark" src="/img/logo.svg" alt="">
+        <span class="logo-words"><span class="logo-en">DALLOUL</span><span class="logo-ar">دلـول للسياحة والسفر</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="/" data-i18n="nav.home">الرئيسية</a>
+        <a href="/services" data-i18n="nav.services">خدماتنا</a>
+        <a href="/apply" data-i18n="nav.apply">قدّم طلبك</a>
+        <a href="/contact" data-i18n="nav.contact">تواصل معنا</a>
+        <a class="nav-cta" href="https://wa.me/201026146111" data-i18n="nav.whatsapp">واتساب</a>
+      </div>
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button class="lang-btn" data-lang="ar">ع</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="zh">中</button>
+        </div>
+        <button class="nav-toggle" aria-label="القائمة">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero" style="padding:0">
+    <div class="container" style="padding:42px 20px">
+      <div class="tag" data-i18n="apply.tag">قدّم طلبك</div>
+      <h1 data-i18n="apply.title">أرسل بياناتك وأوراقك في خطوات بسيطة</h1>
+      <p data-i18n="apply.text">املأ النموذج وارفع صور أوراقك من هاتفك. سنراجع طلبك ونتواصل معك على واتساب لتأكيد التفاصيل والمطلوب قبل أي دفع.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <form id="applyForm" class="form-wrap" action="/apply" method="post" enctype="multipart/form-data">
+          <div class="note" data-i18n="form.note">نحن نؤكد أهليتك والمطلوب منك قبل أي دفع. لا تتم أي عملية دفع عبر الموقع.</div>
+
+          <div class="field">
+            <label for="service"><span data-i18n="form.service">الخدمة المطلوبة</span> <span class="req">*</span></label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected data-i18n="form.service.ph">اختر الخدمة…</option>
+              <option value="entry_approval" data-i18n="opt.entry">موافقة دخول مصر</option>
+              <option value="umrah_hajj" data-i18n="opt.umrah">تأشيرة وبرامج العمرة والحج</option>
+              <option value="rafah" data-i18n="opt.rafah">تنسيق معبر رفح</option>
+              <option value="pa_documents" data-i18n="opt.docs">استخراج وتصديق الأوراق من رام الله</option>
+              <option value="driving_license" data-i18n="opt.license">رخصة قيادة دولية / فلسطينية</option>
+              <option value="flights" data-i18n="opt.flights">تذاكر طيران</option>
+              <option value="hotels" data-i18n="opt.hotels">حجز فنادق</option>
+              <option value="airport" data-i18n="opt.airport">استقبال مطار</option>
+              <option value="car_rental" data-i18n="opt.car">تأجير سيارات وتنقلات</option>
+              <option value="insurance" data-i18n="opt.insurance">تأمين السفر</option>
+              <option value="tourism" data-i18n="opt.tourism">برامج سياحية في مصر</option>
+              <option value="other_visas" data-i18n="opt.visas">تأشيرات دول أخرى</option>
+              <option value="other" data-i18n="opt.other">خدمة أخرى</option>
+            </select>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="nameAr"><span data-i18n="form.nameAr">الاسم بالكامل (عربي)</span> <span class="req">*</span></label>
+              <input id="nameAr" name="nameAr" type="text" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="nameLatin" data-i18n="form.nameLatin">الاسم كما في جواز السفر (إنجليزي)</label>
+              <input id="nameLatin" name="nameLatin" type="text" dir="ltr">
+            </div>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="nationality"><span data-i18n="form.nationality">الجنسية</span> <span class="req">*</span></label>
+              <input id="nationality" name="nationality" type="text" required>
+            </div>
+            <div class="field">
+              <label for="passportNo" data-i18n="form.passportNo">رقم جواز السفر</label>
+              <input id="passportNo" name="passportNo" type="text" dir="ltr">
+            </div>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="dob" data-i18n="form.dob">تاريخ الميلاد</label>
+              <input id="dob" name="dob" type="date">
+            </div>
+            <div class="field">
+              <label for="phone"><span data-i18n="form.phone">رقم الهاتف / واتساب</span> <span class="req">*</span></label>
+              <input id="phone" name="phone" type="tel" required dir="ltr" placeholder="+970 / +20 …">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email" data-i18n="form.email">البريد الإلكتروني (اختياري)</label>
+            <input id="email" name="email" type="email" dir="ltr">
+          </div>
+
+          <div class="field file-row">
+            <label for="passport"><span data-i18n="form.passport">صورة جواز السفر</span> <span class="req">*</span></label>
+            <input id="passport" name="passport" type="file" accept="image/*,application/pdf" required>
+            <div class="hint"><span data-i18n="form.hint.passport">صورة واضحة من الهاتف مقبولة (JPG / PNG / PDF — حتى 12 ميجابايت).</span> <span class="file-name"></span></div>
+          </div>
+
+          <div class="field file-row">
+            <label for="idcard" data-i18n="form.idcard">صورة الهوية (إن وُجدت)</label>
+            <input id="idcard" name="idcard" type="file" accept="image/*,application/pdf">
+            <div class="hint"><span class="file-name"></span></div>
+          </div>
+
+          <div class="field file-row">
+            <label for="photo" data-i18n="form.photo">صورة شخصية (إن طُلبت)</label>
+            <input id="photo" name="photo" type="file" accept="image/*">
+            <div class="hint"><span class="file-name"></span></div>
+          </div>
+
+          <div class="field file-row">
+            <label for="extra" data-i18n="form.extra">أوراق إضافية (اختياري — حتى 5 ملفات)</label>
+            <input id="extra" name="extra" type="file" accept="image/*,application/pdf" multiple>
+            <div class="hint"><span class="file-name"></span></div>
+          </div>
+
+          <div class="field">
+            <label for="notes" data-i18n="form.notes">ملاحظات / تفاصيل طلبك</label>
+            <textarea id="notes" name="notes" rows="4" data-i18n-ph="form.notes.ph" placeholder="مثال: عدد الأشخاص، التواريخ المطلوبة، نوع الورقة المطلوبة من رام الله…"></textarea>
+          </div>
+
+          <button class="btn btn-gold btn-block" type="submit" data-i18n="form.submit">إرسال الطلب</button>
+          <p class="hint" style="text-align:center;margin-top:12px" data-i18n="form.privacy">بياناتك وأوراقك تُحفظ لدى دلول ويطّلع عليها فريق العمل المختص فقط لخدمة طلبك.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div><h4 data-i18n="footer.about.title">دلول للسياحة والسفر</h4><p data-i18n="footer.about.text">دليلك في رحلتك.</p></div>
+      <div><h4 data-i18n="footer.links">روابط</h4><a href="/services" data-i18n="nav.services">خدماتنا</a><a href="/apply" data-i18n="nav.apply">قدّم طلبك</a><a href="/contact" data-i18n="nav.contact">تواصل معنا</a></div>
+      <div><h4 data-i18n="footer.contact">تواصل</h4><a href="https://wa.me/201026146111">واتساب: 01026146111</a><a href="mailto:dalloultours@gmail.com">dalloultours@gmail.com</a><span data-i18n="footer.address">مدينة نصر، القاهرة</span></div>
+    </div>
+    <div class="copy" data-i18n="footer.copy">© دلول للسياحة والسفر — جميع الحقوق محفوظة.</div>
+  </footer>
+  <a class="wa-float" href="https://wa.me/201026146111" aria-label="واتساب">🟢</a>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

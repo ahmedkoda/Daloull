@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تم استلام طلبك — دلول للسياحة والسفر</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&family=Tajawal:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="/img/logo.svg">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="/" aria-label="دلول للسياحة والسفر">
+        <img class="logo-mark" src="/img/logo.svg" alt="">
+        <span class="logo-words"><span class="logo-en">DALLOUL</span><span class="logo-ar">دلـول للسياحة والسفر</span></span>
+      </a>
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button class="lang-btn" data-lang="ar">ع</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="zh">中</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="center-card form-wrap">
+      <div class="big">✅</div>
+      <h2 data-i18n="ty.title">تم استلام طلبك بنجاح</h2>
+      <p data-i18n="ty.text">شكرًا لك. سيتواصل معك فريق دلول على واتساب لتأكيد التفاصيل والمطلوب منك قبل أي خطوة.</p>
+      <p data-i18n="ty.ref">رقم طلبك المرجعي:</p>
+      <div class="ref" id="ref">—</div>
+      <p class="hint" data-i18n="ty.keep">احتفظ بهذا الرقم للمتابعة.</p>
+      <p style="margin-top:20px">
+        <a class="btn btn-gold" href="https://wa.me/201026146111" data-i18n="ty.wa">تواصل معنا على واتساب</a>
+        <a class="btn btn-outline" style="color:var(--blue);border-color:var(--blue)" href="/" data-i18n="ty.home">العودة للرئيسية</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="copy" data-i18n="footer.copy">© دلول للسياحة والسفر — جميع الحقوق محفوظة.</div>
+  </footer>
+  <script src="/js/i18n.js"></script>
+  <script>
+    const ref = new URLSearchParams(location.search).get('ref');
+    if (ref) document.getElementById('ref').textContent = ref;
+  </script>
+</body>
+</html>

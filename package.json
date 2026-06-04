@@ -1,0 +1,16 @@
+{
+  "name": "dalloul-tours-website",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Official website MVP for Dalloul Tours — service presentation + document intake (Arabic, RTL).",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^2.1.1"
+  }
+}
