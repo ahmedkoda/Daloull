@@ -49,11 +49,8 @@ img { max-width: 100%; }
   gap: 16px; padding: 10px 20px; max-width: var(--maxw); margin: 0 auto;
 }
 .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
-.logo-mark { height: 46px; width: auto; display: block; }
-.logo-words { display: flex; flex-direction: column; line-height: 1.05; }
-.logo-en { font-family: var(--font-head); font-weight: 800; font-size: 22px; color: var(--blue); letter-spacing: 2px; }
-.logo-ar { font-family: var(--font-head); font-weight: 700; font-size: 13px; color: var(--gold); margin-top: 3px; }
-@media (max-width: 480px) { .logo-mark { height: 38px; } .logo-en { font-size: 18px; } .logo-ar { font-size: 11px; } }
+.logo-mark { height: 60px; width: auto; display: block; }
+@media (max-width: 480px) { .logo-mark { height: 48px; } }
 .nav-links { display: flex; gap: 6px; align-items: center; }
 .nav-links a {
   color: var(--ink); font-weight: 600; padding: 8px 12px; border-radius: 8px;
@@ -243,14 +240,12 @@ img { max-width: 100%; }
   .slider { height: clamp(400px, 74vh, 520px); }
   .slide h2 { font-size: clamp(24px, 7vw, 30px); }
   .slide p { font-size: 16px; }
-  .logo-mark { height: 40px; }
-  .logo-en { font-size: 19px; letter-spacing: 1px; }
-  .logo-ar { font-size: 11px; }
+  .logo-mark { height: 46px; }
   .lang-btn { padding: 5px 8px; font-size: 12px; }
   .btn { padding: 12px 20px; }
   .wa-float { width: 54px; height: 54px; font-size: 27px; inset-inline-end: 14px; bottom: 14px; }
   .price-pill { display: inline-block; margin-top: 10px; margin-inline-start: 0; }
 }
 @media (max-width: 360px) {
-  .logo-ar { display: none; }                     /* keep header tidy on very small phones */
+  .logo-mark { height: 40px; }                    /* keep header tidy on very small phones */
 }
